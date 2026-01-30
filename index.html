@@ -3,91 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IID Sovereign Dashboard | Managed by INDIE-Founder</title>
+    <title>IID Sovereign Ecosystem | INDIE-Founder</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
-        body { background-color: #050505; color: #d1d5db; font-family: 'Space Mono', monospace; }
+        body { background-color: #050505; color: #d1d5db; font-family: 'Space Mono', monospace; overflow-x: hidden; }
         .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); }
         .aura-glow { color: #10b981; text-shadow: 0 0 15px rgba(16, 185, 129, 0.4); }
-        .input-admin { background: rgba(255,255,255,0.05); border: 1px solid rgba(16,185,129,0.2); color: white; padding: 10px; border-radius: 8px; outline: none; transition: all 0.3s; }
-        .input-admin:focus { border-color: #10b981; box-shadow: 0 0 10px rgba(16,185,129,0.2); }
-        .btn-founder { background: #10b981; color: #000; font-weight: 800; letter-spacing: 1px; transition: all 0.3s; }
-        .btn-founder:hover { background: #34d399; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(16,185,129,0.4); }
+        .btn-action { background: #10b981; color: #000; font-weight: 800; transition: all 0.3s; cursor: pointer; border-radius: 8px; }
+        .btn-action:hover { background: #34d399; transform: scale(1.02); }
+        .stat-card { padding: 20px; border-radius: 15px; border-top: 2px solid rgba(16,185,129,0.3); }
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center p-4 md:p-8 pb-32">
+<body class="min-h-screen p-4 md:p-10">
 
-    <nav class="w-full max-w-6xl flex justify-between items-center mb-10 py-4 border-b border-white/5">
-        <div class="flex items-center gap-3">
-            <div id="status-light" class="w-3 h-3 bg-red-500 rounded-full"></div>
-            <span class="tracking-[0.4em] font-bold text-xs uppercase">IID Sovereign v1.7</span>
+    <nav class="max-w-7xl mx-auto flex justify-between items-center mb-12 border-b border-white/5 pb-6">
+        <div>
+            <h1 class="text-xs tracking-[0.5em] font-bold opacity-50">IID PROTOCOL V1.9</h1>
+            <p class="text-[10px] text-emerald-500 font-bold uppercase">Keys of Kindness Thread</p>
         </div>
-        <div class="text-[10px] font-bold text-emerald-500 tracking-[0.2em] border border-emerald-500/30 px-3 py-1 rounded">
-            FOUNDER AUTHORITY ACTIVE
-        </div>
+        <div id="status-tag" class="text-[9px] px-3 py-1 rounded border border-red-500 text-red-500 uppercase font-bold">Offline</div>
     </nav>
 
-    <main class="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-12 gap-8">
+    <main class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
         
-        <div class="lg:col-span-7 space-y-6">
-            <section class="glass p-10 rounded-3xl relative overflow-hidden border-l-4 border-emerald-500">
-                <div class="absolute top-0 right-0 p-6 opacity-5 text-6xl font-black italic">IID</div>
-                <h2 class="text-xs opacity-40 mb-8 uppercase tracking-[0.5em]">Global Identity Value</h2>
+        <div class="space-y-6">
+            <section class="glass p-8 rounded-3xl border-l-4 border-emerald-500">
+                <h2 class="text-[10px] opacity-40 uppercase tracking-widest mb-4">Master Identity</h2>
+                <div class="text-4xl font-black aura-glow mb-2" id="aura-val">---</div>
+                <p class="text-[10px] opacity-60 uppercase">Current Reputation Layer</p>
                 
-                <h1 class="text-5xl font-black aura-glow mb-4 tracking-tighter">Aura: <span id="aura-val">---</span></h1>
-                
-                <div class="grid grid-cols-3 gap-6 mt-12 pt-8 border-t border-white/5">
-                    <div>
-                        <p class="text-[10px] opacity-40 uppercase mb-1">ENPE Engine</p>
-                        <p id="enpe-val" class="text-2xl font-bold text-blue-400">0.0</p>
+                <div class="mt-8 space-y-3">
+                    <div class="flex justify-between text-[10px] border-b border-white/5 pb-1">
+                        <span>STAKING APY</span><span class="text-blue-400 font-bold">HIGH (GENESIS)</span>
                     </div>
-                    <div>
-                        <p class="text-[10px] opacity-40 uppercase mb-1">LUV Social</p>
-                        <p id="luv-val" class="text-2xl font-bold text-red-500">0.0</p>
-                    </div>
-                    <div>
-                        <p class="text-[10px] opacity-40 uppercase mb-1">IND-EUR Stable</p>
-                        <p id="ind-val" class="text-2xl font-bold text-emerald-400 font-mono">0</p>
+                    <div class="flex justify-between text-[10px] border-b border-white/5 pb-1">
+                        <span>SWF ALLOCATION</span><span class="font-bold">80%</span>
                     </div>
                 </div>
             </section>
 
-            <section class="glass p-6 rounded-2xl h-48 overflow-y-auto font-mono text-[10px] opacity-50">
-                <div id="logs" class="space-y-1">
-                    <p class="text-emerald-500">> System Ready. Awaiting Founder Instructions...</p>
-                </div>
+            <section class="glass p-6 rounded-2xl">
+                <h3 class="text-[10px] font-bold mb-4 opacity-40">KICK-OFF 2026 TIMER</h3>
+                <div id="countdown" class="text-xl font-bold font-mono">01 Feb 2026</div>
             </section>
         </div>
 
-        <div class="lg:col-span-5 space-y-6">
-            <section class="glass p-8 rounded-3xl border border-emerald-500/20 bg-emerald-500/5">
-                <h3 class="text-xs font-black mb-8 uppercase tracking-[0.3em] text-emerald-400 flex items-center gap-2">
-                    <span class="w-2 h-2 bg-emerald-400 rounded-full"></span> High-Level Authority
-                </h3>
-                
-                <div class="space-y-6">
-                    <div>
-                        <label class="block text-[10px] opacity-50 mb-3 uppercase tracking-widest text-emerald-200">Founder Transfer (IND-EUR)</label>
-                        <input type="number" id="input-ind-eur" class="input-admin w-full mb-3 font-mono text-lg" placeholder="0.00">
-                        <button onclick="transferLargeFunds()" class="btn-founder w-full py-3 rounded-xl text-xs uppercase">Execute Global Transfer</button>
-                        <p class="text-[9px] opacity-30 mt-2 italic">*No 100MB limit. Direct Cloud execution to Supabase.</p>
-                    </div>
+        <div class="lg:col-span-2 space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="glass stat-card">
+                    <p class="text-[9px] opacity-40 mb-2">ENPE (E-COIN)</p>
+                    <p id="enpe-val" class="text-2xl font-bold text-blue-400">0.0</p>
+                    <p class="text-[8px] mt-2 opacity-30">SWF BACKED</p>
+                </div>
+                <div class="glass stat-card border-t-red-500/50">
+                    <p class="text-[9px] opacity-40 mb-2">LOVELY COIN (LUV)</p>
+                    <p id="luv-val" class="text-2xl font-bold text-red-500">0.0</p>
+                    <p class="text-[8px] mt-2 opacity-30">DAILY REWARD: 1-10</p>
+                </div>
+                <div class="glass stat-card border-t-emerald-500/50">
+                    <p class="text-[9px] opacity-40 mb-2">IND-EUR (STABLE)</p>
+                    <p id="ind-val" class="text-2xl font-bold text-emerald-400">0</p>
+                    <p class="text-[8px] mt-2 opacity-30">ANCHOR VALUE</p>
+                </div>
+            </div>
 
-                    <div class="pt-6 border-t border-white/5">
-                        <label class="block text-[10px] opacity-50 mb-3 uppercase tracking-widest text-blue-200">Adjust System Aura</label>
-                        <div class="flex gap-2">
-                            <input type="number" id="input-aura" class="input-admin w-full font-mono" placeholder="999">
-                            <button onclick="updateAura()" class="btn-founder px-6 rounded-xl text-[10px] uppercase">Sync</button>
-                        </div>
+            <section class="glass p-8 rounded-3xl border border-emerald-500/20 shadow-2xl">
+                <h2 class="text-xs font-black text-emerald-500 uppercase tracking-[0.3em] mb-8">Founder Authority Panel</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="space-y-4">
+                        <label class="text-[10px] opacity-40 uppercase">Global Distribution (IND-EUR)</label>
+                        <input type="number" id="input-amount" class="w-full bg-white/5 border border-white/10 p-3 rounded-lg outline-none focus:border-emerald-500 text-lg font-mono" placeholder="2.000.000.000">
+                        <button onclick="executeTransfer()" class="btn-action w-full py-3 text-[10px]">EXECUTE GLOBAL TRANSFER</button>
                     </div>
                     
-                    <div class="pt-6 border-t border-white/5">
-                        <label class="block text-[10px] opacity-50 mb-3 uppercase tracking-widest text-red-300">Social LUV Update</label>
+                    <div class="space-y-4 pt-4 md:pt-0">
                         <div class="flex gap-2">
-                            <input type="number" id="input-luv" class="input-admin w-full font-mono" placeholder="1.0">
-                            <button onclick="updateLuv()" class="btn-founder px-6 rounded-xl text-[10px] uppercase">Sync</button>
+                            <div class="w-full">
+                                <label class="text-[10px] opacity-40 uppercase">Daily Koin (1-10)</label>
+                                <input type="number" id="input-daily" class="w-full bg-white/5 border border-white/10 p-2 rounded outline-none" placeholder="10">
+                            </div>
+                            <button onclick="updateLuv()" class="btn-action mt-6 px-4 text-[9px]">SYNC</button>
+                        </div>
+                        <div class="p-4 bg-white/5 rounded-lg border border-white/5">
+                            <p class="text-[9px] opacity-50 italic uppercase">Proof of Kindness: Photo Required (Max 1MB)</p>
+                            <button class="mt-2 text-[8px] border border-white/20 px-2 py-1 opacity-30 cursor-not-allowed">Video Support (Server Pending)</button>
                         </div>
                     </div>
                 </div>
@@ -95,74 +97,47 @@
         </div>
     </main>
 
-    <footer class="mt-auto py-10 text-center opacity-20 text-[9px] uppercase tracking-[0.5em]">
-        Managed by INDIE-Founder | Cloud SSOT Architecture 2026
+    <footer class="mt-20 text-center opacity-20 text-[9px] uppercase tracking-[1em]">
+        Humanism Protocol | INDIE-Founder Sovereign Identity
     </footer>
 
     <script>
-        // SOVEREIGN KEYS
         const SUPABASE_URL = 'https://wfnywtgctkbatnngkvmr.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indmbnl3dGdjdGtiYXRubmdrdm1yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk3MjE0MjcsImV4cCI6MjA4NTI5NzQyN30.ghQ1bveGBVzapZMdYvZoGnd3isOsGHLLcR3PsMJSVZI';
         
         const supabase = supabasejs.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        function addLog(msg, type = 'info') {
-            const logs = document.getElementById('logs');
-            const time = new Date().toLocaleTimeString();
-            const color = type === 'error' ? 'text-red-500' : 'text-emerald-400';
-            logs.innerHTML = `<p><span class="opacity-50 text-white">[${time}]</span> <span class="${color}">${msg}</span></p>` + logs.innerHTML;
-        }
-
-        async function syncData() {
-            try {
-                const { data: profile } = await supabase.from('iid_profiles').select('*').limit(1).single();
-                const { data: assets } = await supabase.from('iid_assets').select('*').limit(1).single();
-                
-                if(profile) document.getElementById('aura-val').innerText = profile.aura_score;
-                if(assets) {
-                    document.getElementById('enpe-val').innerText = assets.enpe_balance;
-                    document.getElementById('luv-val').innerText = assets.luv_balance;
-                    document.getElementById('ind-val').innerText = Number(assets.ind_eur_balance).toLocaleString('en-US');
-                }
-                document.getElementById('status-light').className = 'w-3 h-3 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_10px_#10b981]';
-            } catch (e) {
-                addLog("Sync failed. Checking Cloud connection...", "error");
+        async function initSync() {
+            const { data: p } = await supabase.from('iid_profiles').select('*').single();
+            const { data: a } = await supabase.from('iid_assets').select('*').single();
+            
+            if(p) {
+                document.getElementById('aura-val').innerText = p.aura_score;
+                document.getElementById('status-tag').innerText = "Founder Verified";
+                document.getElementById('status-tag').className = "text-[9px] px-3 py-1 rounded border border-emerald-500 text-emerald-500 uppercase font-bold animate-pulse";
+            }
+            if(a) {
+                document.getElementById('enpe-val').innerText = a.enpe_balance;
+                document.getElementById('luv-val').innerText = a.luv_balance;
+                document.getElementById('ind-val').innerText = Number(a.ind_eur_balance).toLocaleString('de-DE');
             }
         }
 
-        async function transferLargeFunds() {
-            const amount = document.getElementById('input-ind-eur').value;
-            if(!amount) return;
-            
-            addLog(`Initializing Global Transfer of ${amount} IND-EUR...`);
-            
-            const { data, error } = await supabase.from('iid_assets')
-                .update({ ind_eur_balance: amount })
-                .neq('enpe_balance', -1); // Targeting row without specific ID for founder authority
-
-            if(!error) {
-                addLog(`SUCCESS: ${amount} IND-EUR transferred to global pool.`, 'info');
-                syncData();
-            } else {
-                addLog(`CRITICAL ERROR: ${error.message}`, 'error');
-            }
-        }
-
-        async function updateAura() {
-            const val = document.getElementById('input-aura').value;
-            const { error } = await supabase.from('iid_profiles').update({ aura_score: val }).eq('username', 'indie_dev');
-            if(!error) { addLog(`System Aura adjusted to ${val}`); syncData(); }
+        async function executeTransfer() {
+            const amt = document.getElementById('input-amount').value;
+            if(!amt) return;
+            const { error } = await supabase.from('iid_assets').update({ ind_eur_balance: amt }).neq('enpe_balance', -1);
+            if(!error) { alert("Sovereign Transfer Executed"); initSync(); }
         }
 
         async function updateLuv() {
-            const val = document.getElementById('input-luv').value;
+            const val = document.getElementById('input-daily').value;
             const { error } = await supabase.from('iid_assets').update({ luv_balance: val }).neq('enpe_balance', -1);
-            if(!error) { addLog(`Social LUV value synced to ${val}`); syncData(); }
+            if(!error) { alert("LUV Sync Success"); initSync(); }
         }
 
-        // Initial Sync
-        syncData();
-        setInterval(syncData, 5000); // Auto-sync every 5 seconds
+        initSync();
+        setInterval(initSync, 10000);
     </script>
 </body>
 </html>
