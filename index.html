@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IID Unified Identity | Managed by INDIE-Founder</title>
+    <title>IID Dashboard | Managed by INDIE-Founder</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
@@ -11,55 +11,100 @@
         body { background-color: #050505; color: #d1d5db; font-family: 'Space Mono', monospace; }
         .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); }
         .aura-glow { color: #10b981; text-shadow: 0 0 15px rgba(16, 185, 129, 0.4); }
-        .loading-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
+        .input-dark { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; padding: 5px 10px; border-radius: 5px; outline: none; }
+        .btn-emerald { background: #10b981; color: #000; font-weight: bold; transition: all 0.2s; }
+        .btn-emerald:hover { background: #34d399; transform: scale(1.05); }
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center p-6">
+<body class="min-h-screen flex flex-col items-center p-6 pb-24">
 
     <nav class="w-full max-w-5xl flex justify-between items-center mb-12 py-4 border-b border-white/5">
-        <div class="flex items-center gap-2">
-            <div id="status-light" class="w-3 h-3 bg-red-500 rounded-full"></div>
-            <span class="tracking-[0.3em] font-bold text-xs uppercase">IID Protocol v1.4.2</span>
+        <div class="flex items-center gap-2 text-xs font-bold tracking-widest uppercase">
+            <div id="status-light" class="w-2 h-2 bg-red-500 rounded-full"></div>
+            IID Protocol v1.6 (ADMIN)
         </div>
-        <div class="text-[10px] opacity-40 uppercase tracking-widest">Cloud-Native Identity</div>
+        <div class="text-[10px] opacity-40 uppercase tracking-widest text-emerald-500">INDIE-FOUNDER AUTHENTICATED</div>
     </nav>
 
     <main class="w-full max-w-5xl grid grid-cols-1 lg:grid-cols-12 gap-8">
         <div class="lg:col-span-8 space-y-8">
-            <section class="glass p-8 rounded-2xl relative overflow-hidden">
-                <div class="absolute top-0 right-0 p-4 opacity-5 text-4xl font-bold">IID-2026</div>
-                <h2 class="text-xs opacity-50 mb-6 uppercase tracking-widest">Unified Identity Summary</h2>
-                <div class="flex flex-col md:flex-row justify-between gap-8">
+            <section class="glass p-8 rounded-2xl">
+                <h1 class="text-4xl font-black aura-glow mb-2">Aura: <span id="aura-val">---</span></h1>
+                <div class="grid grid-cols-3 gap-4 mt-8">
+                    <div class="text-center"><p class="text-[10px] opacity-40 uppercase">ENPE</p><p id="enpe-val" class="text-xl font-bold text-blue-400">0.0</p></div>
+                    <div class="text-center"><p class="text-[10px] opacity-40 uppercase">LUV</p><p id="luv-val" class="text-xl font-bold text-red-400">0.0</p></div>
+                    <div class="text-center"><p class="text-[10px] opacity-40 uppercase">IND-EUR</p><p id="ind-val" class="text-xl font-bold text-emerald-400">0</p></div>
+                </div>
+            </section>
+
+            <section class="glass p-8 rounded-2xl border-2 border-emerald-500/20">
+                <h3 class="text-xs font-bold opacity-70 mb-6 uppercase tracking-[0.3em] text-emerald-500">IID Asset Controller</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <h1 class="text-4xl font-black aura-glow mb-2">Aura: <span id="aura-val">---</span></h1>
-                        <p class="text-2xl font-bold tracking-tight">111,000 TM</p>
-                        <p class="text-[10px] opacity-40 italic mt-1 text-emerald-500">Neurolang Estimated Value Verified</p>
-                    </div>
-                    <div class="space-y-4 text-sm">
-                        <div class="flex justify-between w-48 border-b border-white/5 pb-1">
-                            <span class="opacity-40 uppercase text-[10px]">Owner</span>
-                            <span class="font-bold">Indie Dev</span>
+                        <label class="block text-[10px] opacity-40 mb-2 uppercase">Adjust Aura</label>
+                        <div class="flex gap-2">
+                            <input type="number" id="input-aura" class="input-dark w-full" placeholder="999">
+                            <button onclick="updateAura()" class="btn-emerald text-[10px] px-4 py-2 rounded">UPDATE</button>
                         </div>
-                        <div class="flex justify-between w-48 border-b border-white/5 pb-1 text-emerald-500">
-                            <span class="opacity-40 uppercase text-[10px]">Status</span>
-                            <span class="font-bold tracking-tighter" id="sync-status">DISCONNECTED</span>
+                    </div>
+                    <div>
+                        <label class="block text-[10px] opacity-40 mb-2 uppercase">Adjust LUV Balance</label>
+                        <div class="flex gap-2">
+                            <input type="number" id="input-luv" class="input-dark w-full" placeholder="1.0">
+                            <button onclick="updateLuv()" class="btn-emerald text-[10px] px-4 py-2 rounded">UPDATE</button>
                         </div>
                     </div>
                 </div>
             </section>
+        </div>
 
-            <section class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div class="glass p-6 rounded-xl border-t-2 border-blue-500/30 text-center">
-                    <span class="text-2xl block mb-2">⚡</span>
-                    <h3 class="text-[10px] opacity-40 uppercase">ENPE (Native)</h3>
-                    <p class="text-xl font-bold" id="enpe-val">0.0</p>
-                </div>
-                <div class="glass p-6 rounded-xl border-t-2 border-red-500/30 text-center">
-                    <span class="text-2xl block mb-2">❤️</span>
-                    <h3 class="text-[10px] opacity-40 uppercase">LUV (Social)</h3>
-                    <p class="text-xl font-bold" id="luv-val">0.0</p>
-                </div>
-                <div class="glass p-6 rounded-xl border-t-2 border-emerald-500/30 text-center">
-                    <span class="text-2xl block mb-2">⚓</span>
-                    <h3 class="text-[10px] opacity-40 uppercase text-emerald
+        <aside class="lg:col-span-4 glass p-6 rounded-2xl h-fit">
+            <h3 class="text-xs font-bold opacity-40 mb-4 uppercase">Protocol Log</h3>
+            <div id="logs" class="text-[9px] font-mono space-y-2 opacity-60">
+                <p>> Initializing IID Cloud...</p>
+            </div>
+        </aside>
+    </main>
+
+    <script>
+        // INTEGRATED KEYS
+        const SUPABASE_URL = 'https://wfnywtgctkbatnngkvmr.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indmbnl3dGdjdGtiYXRubmdrdm1yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk3MjE0MjcsImV4cCI6MjA4NTI5NzQyN30.ghQ1bveGBVzapZMdYvZoGnd3isOsGHLLcR3PsMJSVZI';
+        
+        const supabase = supabasejs.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        function log(msg) {
+            const l = document.getElementById('logs');
+            l.innerHTML = `<p>> ${new Date().toLocaleTimeString()}: ${msg}</p>` + l.innerHTML;
+        }
+
+        async function refreshData() {
+            const { data: p } = await supabase.from('iid_profiles').select('*').limit(1).single();
+            const { data: a } = await supabase.from('iid_assets').select('*').limit(1).single();
+            
+            if(p) document.getElementById('aura-val').innerText = p.aura_score;
+            if(a) {
+                document.getElementById('enpe-val').innerText = a.enpe_balance;
+                document.getElementById('luv-val').innerText = a.luv_balance;
+                document.getElementById('ind-val').innerText = a.ind_eur_balance.toLocaleString();
+            }
+            document.getElementById('status-light').className = 'w-2 h-2 bg-emerald-500 rounded-full animate-pulse';
+            log("System synchronized.");
+        }
+
+        async function updateAura() {
+            const val = document.getElementById('input-aura').value;
+            const { error } = await supabase.from('iid_profiles').update({ aura_score: val }).eq('username', 'indie_dev');
+            if(!error) { log(`Aura set to ${val}`); refreshData(); } else { log("Error: Update Aura Failed"); }
+        }
+
+        async function updateLuv() {
+            const val = document.getElementById('input-luv').value;
+            const { error } = await supabase.from('iid_assets').update({ luv_balance: val }).neq('enpe_balance', -1); // Targeting the main row
+            if(!error) { log(`LUV balance updated: ${val}`); refreshData(); } else { log("Error: Update LUV Failed"); }
+        }
+
+        refreshData();
+    </script>
+</body>
+</html>
