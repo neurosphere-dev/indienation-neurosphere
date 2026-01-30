@@ -11,31 +11,28 @@
         body { background-color: #050505; color: #d1d5db; font-family: 'Space Mono', monospace; }
         .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); }
         .aura-glow { color: #10b981; text-shadow: 0 0 15px rgba(16, 185, 129, 0.4); }
-        .btn-action { transition: all 0.3s ease; border: 1px solid #3f3f46; }
-        .btn-action:hover { background: #10b981; color: #000; border-color: #10b981; }
+        .loading-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
     </style>
 </head>
 <body class="min-h-screen flex flex-col items-center p-6">
 
     <nav class="w-full max-w-5xl flex justify-between items-center mb-12 py-4 border-b border-white/5">
         <div class="flex items-center gap-2">
-            <div class="w-3 h-3 bg-emerald-500 rounded-full animate-pulse"></div>
-            <span class="tracking-[0.3em] font-bold text-xs">IID PROTOCOL v1.4.2</span>
+            <div id="status-light" class="w-3 h-3 bg-red-500 rounded-full"></div>
+            <span class="tracking-[0.3em] font-bold text-xs uppercase">IID Protocol v1.4.2</span>
         </div>
-        <div class="text-[10px] opacity-40 uppercase tracking-widest">
-            Cloud-Native Identity System
-        </div>
+        <div class="text-[10px] opacity-40 uppercase tracking-widest">Cloud-Native Identity</div>
     </nav>
 
     <main class="w-full max-w-5xl grid grid-cols-1 lg:grid-cols-12 gap-8">
-        
         <div class="lg:col-span-8 space-y-8">
             <section class="glass p-8 rounded-2xl relative overflow-hidden">
-                <div class="absolute top-0 right-0 p-4 opacity-10 text-4xl">IID</div>
+                <div class="absolute top-0 right-0 p-4 opacity-5 text-4xl font-bold">IID-2026</div>
                 <h2 class="text-xs opacity-50 mb-6 uppercase tracking-widest">Unified Identity Summary</h2>
                 <div class="flex flex-col md:flex-row justify-between gap-8">
                     <div>
-                        <h1 class="text-4xl font-black aura-glow mb-2">Aura: 999</h1>
+                        <h1 class="text-4xl font-black aura-glow mb-2">Aura: <span id="aura-val">---</span></h1>
                         <p class="text-2xl font-bold tracking-tight">111,000 TM</p>
                         <p class="text-[10px] opacity-40 italic mt-1 text-emerald-500">Neurolang Estimated Value Verified</p>
                     </div>
@@ -44,13 +41,9 @@
                             <span class="opacity-40 uppercase text-[10px]">Owner</span>
                             <span class="font-bold">Indie Dev</span>
                         </div>
-                        <div class="flex justify-between w-48 border-b border-white/5 pb-1">
-                            <span class="opacity-40 uppercase text-[10px]">Logic</span>
-                            <span class="font-bold">NEUROLANG_L1</span>
-                        </div>
-                        <div class="flex justify-between w-48 border-b border-white/5 pb-1">
+                        <div class="flex justify-between w-48 border-b border-white/5 pb-1 text-emerald-500">
                             <span class="opacity-40 uppercase text-[10px]">Status</span>
-                            <span class="text-emerald-500 font-bold">SYNCED</span>
+                            <span class="font-bold tracking-tighter" id="sync-status">DISCONNECTED</span>
                         </div>
                     </div>
                 </div>
@@ -60,58 +53,13 @@
                 <div class="glass p-6 rounded-xl border-t-2 border-blue-500/30 text-center">
                     <span class="text-2xl block mb-2">⚡</span>
                     <h3 class="text-[10px] opacity-40 uppercase">ENPE (Native)</h3>
-                    <p class="text-xl font-bold" id="enpe-val">10.5</p>
+                    <p class="text-xl font-bold" id="enpe-val">0.0</p>
                 </div>
                 <div class="glass p-6 rounded-xl border-t-2 border-red-500/30 text-center">
                     <span class="text-2xl block mb-2">❤️</span>
                     <h3 class="text-[10px] opacity-40 uppercase">LUV (Social)</h3>
-                    <p class="text-xl font-bold" id="luv-val">1.0</p>
+                    <p class="text-xl font-bold" id="luv-val">0.0</p>
                 </div>
                 <div class="glass p-6 rounded-xl border-t-2 border-emerald-500/30 text-center">
                     <span class="text-2xl block mb-2">⚓</span>
-                    <h3 class="text-[10px] opacity-40 uppercase text-emerald-500">IND-EUR (Stable)</h3>
-                    <p class="text-xl font-bold" id="ind-val">100,000</p>
-                </div>
-            </section>
-        </div>
-
-        <div class="lg:col-span-4 space-y-6">
-            <section class="glass p-6 rounded-2xl">
-                <h3 class="text-xs font-bold opacity-40 mb-4 uppercase tracking-widest">AI Guard Status</h3>
-                <div class="flex items-center justify-between mb-4">
-                    <span class="text-xs text-blue-400 font-bold">PHASE 1 ACTIVE</span>
-                    <span class="text-[10px] opacity-50">12.5% Autonomy</span>
-                </div>
-                <div class="w-full bg-white/5 h-1.5 rounded-full overflow-hidden mb-6">
-                    <div class="bg-blue-500 h-full w-[12.5%] shadow-[0_0_10px_#3b82f6]"></div>
-                </div>
-                <div class="text-[9px] opacity-30 leading-relaxed">
-                    Kick-off: 01-02-2026<br>
-                    Transition Period: 3 Years<br>
-                    Managed by INDIE-Founder
-                </div>
-            </section>
-
-            <section class="glass p-6 rounded-2xl">
-                <h3 class="text-xs font-bold opacity-40 mb-4 uppercase tracking-widest">Genesis Feed</h3>
-                <div class="space-y-4">
-                    <div class="border-l border-emerald-500/50 pl-4 py-1">
-                        <p class="text-[10px] text-emerald-400 font-bold">+1.0 LUV Reward</p>
-                        <p class="text-[9px] opacity-30">Distributed by INDIE-Founder</p>
-                    </div>
-                </div>
-            </section>
-        </div>
-    </main>
-
-    <footer class="mt-auto py-12 text-center text-[10px] opacity-20 uppercase tracking-[0.4em] space-y-2">
-        <p>Managed by INDIE-Founder © 2026</p>
-        <p>Living Value Identity Ecosystem Protocol</p>
-    </footer>
-
-    <script>
-        // Placeholder untuk integrasi Supabase nanti
-        console.log("IID Protocol Initiated. Standing by for Supabase Keys.");
-    </script>
-</body>
-</html>
+                    <h3 class="text-[10px] opacity-40 uppercase text-emerald
